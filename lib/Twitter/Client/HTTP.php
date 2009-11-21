@@ -23,7 +23,10 @@ class HTTP extends AbstractClient
     protected function _doFetch($url, array $data = array(), $method = 'get')
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($ch, CURLOPT_USERPWD, $this->_username.':'.$this->_password);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 
@@ -31,8 +34,6 @@ class HTTP extends AbstractClient
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
-
-        curl_setopt($ch, CURLOPT_URL, $url);
 
         $data = curl_exec($ch);
         curl_close($ch);

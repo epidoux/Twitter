@@ -14,10 +14,17 @@ use \Twitter\Api;
 class Search extends Api
 {
     private $_nextPage;
+    private $_previousPage;
+    protected $_apiBaseUrl = 'http://search.twitter.com';
 
-    protected function _initialize()
+    public function getNextPage()
     {
-        $this->_client->setApiBaseUrl('http://search.twitter.com');
+        return $this->_nextPage;
+    }
+
+    public function getPreviousPage()
+    {
+        return $this->_previousPage;
     }
 
     public function find($q, $options = array(), $iteratePages = false)
@@ -36,6 +43,12 @@ class Search extends Api
             $this->_nextPage = $results->next_page;
         } else {
             $this->_nextPage = false;
+        }
+
+        if (isset($results->previous_page) && $results->previous_page) {
+            $this->_previousPage = $results->previous_page;
+        } else {
+            $this->_previousPage = false;
         }
 
         return $results;

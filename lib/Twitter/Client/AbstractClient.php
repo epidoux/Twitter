@@ -12,13 +12,7 @@ namespace Twitter\Client;
 abstract class AbstractClient implements Client
 {
     protected $_username;
-    protected $_apiBaseUrl = 'http://api.twitter.com/1';
     protected $_nextCursor;
-
-    public function setApiBaseUrl($url)
-    {
-        $this->_apiBaseUrl = $url;
-    }
 
     public function setUsername($username)
     {
@@ -35,21 +29,14 @@ abstract class AbstractClient implements Client
         return $this->_nextCursor;
     }
 
-    public function fetch($path, array $data = array(), $method = 'get')
+    public function fetch($url, array $data = array(), $method = 'get')
     {
-        if (strstr($path, '?')) {
-            $path = str_replace('?', '.json?', $path);
-        } else {
-            $path = $path . '.json';
-        }
-        $url = $this->_apiBaseUrl . '/' . $path;
-
         if ($method == 'delete') {
             $data['_method'] = 'DELETE';
         }
 
         if ($method == 'get' && ! empty($data)) {
-            $sep = strstr($path, '?') ? '&' : '?';
+            $sep = strstr($url, '?') ? '&' : '?';
             $url = $url . $sep . http_build_query($data);
         }
 
