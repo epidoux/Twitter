@@ -16,7 +16,7 @@ class OAuth extends AbstractClient
 
     public function __construct($consumerKey, $consumerSecret, $signatureMethod = OAUTH_SIG_METHOD_HMACSHA1, $authType = OAUTH_AUTH_TYPE_URI)
     {
-        $this->_oAuth = new OAuth($consumerKey, $consumerSecret, $signatureMethod, $authType);
+        $this->_oAuth = new \OAuth($consumerKey, $consumerSecret, $signatureMethod, $authType);
         $result = $this->_oAuth->getRequestToken('https://twitter.com/oauth/request_token');
         $this->_oAuth->setToken($result['oauth_token'], $result['oauth_token_secret']);
         // How can we get the username?
