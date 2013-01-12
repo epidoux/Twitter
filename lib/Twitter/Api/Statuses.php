@@ -13,8 +13,8 @@ use \Twitter\Api;
  */
 class Statuses extends Api
 {
-    private $_nextCursor = '-1';
-    private $_nextPage = 1;
+    private $nextCursor = '-1';
+    private $nextPage = 1;
 
     public function getPublicTimeline()
     {
@@ -24,7 +24,7 @@ class Statuses extends Api
     public function getFriendsTimeline($iteratePages = false)
     {
         if ($iteratePages) {
-            return $this->_getPaginatedByPageNum('statuses/friends_timeline');
+            return $this->getPaginatedByPageNum('statuses/friends_timeline');
         } else {
             return $this->get('statuses/friends_timeline');
         }
@@ -33,7 +33,7 @@ class Statuses extends Api
     public function getUserTimeline($iteratePages = false)
     {
         if ($iteratePages) {
-            return $this->_getPaginatedByPageNum('statuses/user_timeline');
+            return $this->getPaginatedByPageNum('statuses/user_timeline');
         } else {
             return $this->get('statuses/user_timeline');
         }
@@ -42,7 +42,7 @@ class Statuses extends Api
     public function getMentions($iteratePages = false)
     {
         if ($iteratePages) {
-            return $this->_getPaginatedByPageNum('statuses/mentions');
+            return $this->getPaginatedByPageNum('statuses/mentions');
         } else {
             return $this->get('statuses/mentions');
         }
@@ -68,7 +68,7 @@ class Statuses extends Api
     public function getUserFriends($username, $iteratePages = false)
     {
         if ($iteratePages) {
-            return $this->_getPaginatedByCursor(sprintf('statuses/friends/%s', $username));
+            return $this->getPaginatedByCursor(sprintf('statuses/friends/%s', $username));
         } else {
             return $this->get(sprintf('statuses/friends/%s', $username));
         }
@@ -77,43 +77,43 @@ class Statuses extends Api
     public function getUserFollowers($username, $iteratePages = false)
     {
         if ($iteratePages) {
-            return $this->_getPaginatedByCursor(sprintf('statuses/followers/%s', $username));
+            return $this->getPaginatedByCursor(sprintf('statuses/followers/%s', $username));
         } else {
             return $this->get(sprintf('statuses/followers/%s', $username));
         }
     }
 
-    private function _getPaginatedByPageNum($path, array $data = array())
+    private function getPaginatedByPageNum($path, array $data = array())
     {
-        if ($this->_nextPage === false) {
+        if ($this->nextPage === false) {
             return false;
         }
 
-        $data['page'] = $this->_nextPage;
+        $data['page'] = $this->nextPage;
 
         $results = $this->get($path, $data);
 
         if ($results) {
-            $this->_nextPage++;
+            $this->nextPage++;
         } else {
-            $this->_nextPage = false;
+            $this->nextPage = false;
         }
 
         return $results;
     }
 
-    private function _getPaginatedByCursor($path, array $data = array())
+    private function getPaginatedByCursor($path, array $data = array())
     {
-        if ($this->_nextCursor === false) {
+        if ($this->nextCursor === false) {
             return false;
         }
 
         $data = array();
-        $data['cursor'] = $this->_nextCursor;
+        $data['cursor'] = $this->nextCursor;
 
         $results = $this->get($path, $data);
 
-        $this->_nextCursor = $this->_client->getNextCursor();
+        $this->nextCursor = $this->client->getNextCursor();
 
         return $results;
     }

@@ -13,42 +13,42 @@ use \Twitter\Api;
  */
 class Search extends Api
 {
-    private $_nextPage;
-    private $_previousPage;
-    protected $_apiBaseUrl = 'http://search.twitter.com';
+    private $nextPage;
+    private $previousPage;
+    protected $apiBaseUrl = 'http://search.twitter.com';
 
     public function getNextPage()
     {
-        return $this->_nextPage;
+        return $this->nextPage;
     }
 
     public function getPreviousPage()
     {
-        return $this->_previousPage;
+        return $this->previousPage;
     }
 
     public function find($q, $options = array(), $iteratePages = false)
     {
-        if ($this->_nextPage === false) {
+        if ($this->nextPage === false) {
             return false;
         }
 
-        if ($iteratePages && $this->_nextPage) {
-            $results = $this->get(sprintf('search%s', $this->_nextPage), $options);
+        if ($iteratePages && $this->nextPage) {
+            $results = $this->get(sprintf('search%s', $this->nextPage), $options);
         } else {
             $results = $this->get(sprintf('search?q=%s', $q), $options);
         }
 
         if (isset($results->next_page) && $results->next_page) {
-            $this->_nextPage = $results->next_page;
+            $this->nextPage = $results->next_page;
         } else {
-            $this->_nextPage = false;
+            $this->nextPage = false;
         }
 
         if (isset($results->previous_page) && $results->previous_page) {
-            $this->_previousPage = $results->previous_page;
+            $this->previousPage = $results->previous_page;
         } else {
-            $this->_previousPage = false;
+            $this->previousPage = false;
         }
 
         return $results;

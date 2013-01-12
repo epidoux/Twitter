@@ -11,22 +11,22 @@ namespace Twitter\Client;
  */
 abstract class AbstractClient implements Client
 {
-    protected $_username;
-    protected $_nextCursor;
+    protected $username;
+    protected $nextCursor;
 
     public function setUsername($username)
     {
-        $this->_username = $username;
+        $this->username = $username;
     }
 
     public function getUsername()
     {
-        return $this->_username;
+        return $this->username;
     }
 
     public function getNextCursor()
     {
-        return $this->_nextCursor;
+        return $this->nextCursor;
     }
 
     public function fetch($url, array $data = array(), $method = 'get')
@@ -40,17 +40,17 @@ abstract class AbstractClient implements Client
             $url = $url . $sep . http_build_query($data);
         }
 
-        $json = $this->_doFetch($url, $data, $method);
+        $json = $this->doFetch($url, $data, $method);
 
         preg_match('/"next_cursor":(.*),/', $json, $matches);
-        if (isset($matches[1]) && $matches[1] && $matches[1] != $this->_nextCursor) {
-            $this->_nextCursor = $matches[1];
+        if (isset($matches[1]) && $matches[1] && $matches[1] != $this->nextCursor) {
+            $this->nextCursor = $matches[1];
         } else {
-            $this->_nextCursor = false;
+            $this->nextCursor = false;
         }
 
         return json_decode($json);
     }
 
-    abstract protected function _doFetch($url, array $data, $method);
+    abstract protected function doFetch($url, array $data, $method);
 }

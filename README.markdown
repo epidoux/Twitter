@@ -1,16 +1,8 @@
 # PHP 5.3 Twitter Client
 
+[![Build Status](https://secure.travis-ci.org/jwage/Twitter.png?branch=master)](http://travis-ci.org/jwage/Twitter)
+
 *By Jonathan H. Wage*
-
-## Class Loader
-
-First we need to setup the class loader to load the classes of the Twitter
-library:
-
-    require 'lib/Twitter/ClassLoader.php';
-
-    $classLoader = new \Twitter\ClassLoader('Twitter');
-    $classLoader->register();
 
 ## Intialize Client
 

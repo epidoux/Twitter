@@ -38,19 +38,19 @@ class Friendships extends Api
 
     public function isFollowing($username)
     {
-        $friendship = $this->getFriendship($username, $this->_client->getUsername());
+        $friendship = $this->getFriendship($username, $this->client->getUsername());
         return isset($friendship->relationship->source->following) && $friendship->relationship->source->following ? true : false;
     }
 
     public function isFollowedBy($username)
     {
-        $friendship = $this->getFriendship($username, $this->_client->getUsername());
+        $friendship = $this->getFriendship($username, $this->client->getUsername());
         return isset($friendship->relationship->source->followed_by ) && $friendship->relationship->source->followed_by ? true : false;
     }
 
     public function getFriendship($usernameA, $usernameB = null)
     {
-        $usernameB = $usernameB ? $usernameB : $this->_client->getUsername();;
+        $usernameB = $usernameB ? $usernameB : $this->client->getUsername();;
         return $this->get('friendships/show', array(
             'source_screen_name' => $usernameB,
             'target_screen_name' => $usernameA

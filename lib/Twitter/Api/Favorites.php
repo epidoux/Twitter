@@ -15,7 +15,7 @@ class Favorites extends Api
 {
     public function getMostRecent($username = null)
     {
-        $username = $username ? $username : $this->_client->getUsername();
+        $username = $username ? $username : $this->client->getUsername();
         return $this->get('favorites', array(
             'id' => $username
         ));

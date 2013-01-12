@@ -16,7 +16,7 @@ class ListMembers extends Api
     public function getMembers($id)
     {
         if ( ! strstr($id, '/')) {
-            $id = $this->_client->getUsername() . '/' . $id;
+            $id = $this->client->getUsername() . '/' . $id;
         }
 
         return $this->get(sprintf('%s/members', $id));
@@ -30,7 +30,7 @@ class ListMembers extends Api
         } else {
             $id = $username;
         }
-        return $this->post(sprintf('%s/%s/members', $this->_client->getUsername(), $id), array(
+        return $this->post(sprintf('%s/%s/members', $this->client->getUsername(), $id), array(
             'id' => $id
         ));
     }
@@ -43,7 +43,7 @@ class ListMembers extends Api
         } else {
             $id = $username;
         }
-        return $this->delete(sprintf('%s/%s/members', $this->_client->getUsername(), $id), array(
+        return $this->delete(sprintf('%s/%s/members', $this->client->getUsername(), $id), array(
             'id' => $id
         ));
     }
@@ -51,10 +51,10 @@ class ListMembers extends Api
     public function isMember($id, $username = null)
     {
         if ( ! strstr($id, '/')) {
-            $id = $this->_client->getUsername() . '/' . $id;
+            $id = $this->client->getUsername() . '/' . $id;
         }
 
-        $username = $username ? $username : $this->_client->getUsername();
+        $username = $username ? $username : $this->client->getUsername();
 
         $result = $this->get(
             sprintf('%s/members/%s', $id, $username)

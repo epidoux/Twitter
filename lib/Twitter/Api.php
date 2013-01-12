@@ -13,21 +13,21 @@ use \Twitter\Client\Client;
  */
 class Api
 {
-    protected $_client;
-    protected $_apiBaseUrl = 'http://twitter.com';
+    protected $client;
+    protected $apiBaseUrl = 'http://twitter.com';
 
     public function __construct(Client $client)
     {
-        $this->_client = $client;
-        $this->_initialize();
+        $this->client = $client;
+        $this->initialize();
     }
 
     public function setApiBaseUrl($url)
     {
-        $this->_apiBaseUrl = $url;
+        $this->apiBaseUrl = $url;
     }
 
-    protected function _initialize()
+    protected function initialize()
     {
     }
 
@@ -70,8 +70,8 @@ class Api
         } else {
             $path = $path . '.json';
         }
-        $url = $this->_apiBaseUrl . '/' . $path;
+        $url = $this->apiBaseUrl . '/' . $path;
 
-        return $this->_client->fetch($url, $data, $method);
+        return $this->client->fetch($url, $data, $method);
     }
 }
